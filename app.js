@@ -6,7 +6,10 @@ const cookieParser = require("cookie-parser");
 // const user = require('./models/user');
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");
+const multer = require("multer"); 
+const crypto = require("crypto");
 // const post = require('./models/post');
+
 
 
 app.set("view engine", "ejs")
@@ -14,10 +17,36 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
 
+crypto.randomBytes(12, function (err, bytes) { 
+        console.log(bytes);
+})
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/images/uploads')
+//   },
+//   filename: function (req, file, cb) {
+//     })
+//     const fn = 
+//     cb(null, file.fieldname + '-' + uniqueSuffix)
+//   }
+// })
+
+
 
 app.get('/', (req, res) => {
     res.render("index")
 })
+
+app.get('/test', (req, res) => {
+    res.render("test")
+})
+
+app.post('/upload', upload.single("image"), (req, res) => {
+    console.log(req.file);
+    res.send("File uploaded");
+});
+
 
 app.get('/login', (req, res) => {
     res.render("login")
